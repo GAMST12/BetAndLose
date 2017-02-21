@@ -1,6 +1,7 @@
 package ua.skillsup.betandlose.dao.impl;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,12 +36,22 @@ public class UserDaoImpl implements UserDao{
         return convert(user);
     }
 
+    @Transactional(readOnly = true)
     public UserDto findByLogin(String login) {
-        return null;
+        User user= (User) sessionFactory.getCurrentSession()
+                .createQuery("select u from User u where u.login = :login").setString("login", login).uniqueResult();
+        return convert(user);
     }
 
+    @Transactional(readOnly = false)
     public long create(UserDto userDto) {
-        return 0;
+        User user = EntityDtoConverter.convert(userDto);
+        try {
+            sessionFactory.getCurrentSession().persist(user);
+        } catch (ConstraintViolationException e) {
+            System.out.println(e);
+        }
+        return user.getId();
     }
 
     public void update(UserDto userDto) {

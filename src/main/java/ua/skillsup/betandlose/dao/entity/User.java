@@ -19,6 +19,9 @@ public class User {
     @Column(name = "usr_role", nullable = false)
     private String role;
 
+    @OneToOne(mappedBy="user")
+    private Account account;
+
     public long getId() {
         return id;
     }
@@ -57,6 +60,14 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override
