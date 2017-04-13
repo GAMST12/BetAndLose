@@ -9,4 +9,5 @@ public interface UserDao {
     UserDto findByLogin(String login);
     long create(UserDto userDto);
     void update(UserDto userDto);
+    void delete(UserDto userDto);
 }
