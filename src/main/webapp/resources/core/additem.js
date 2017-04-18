@@ -5,7 +5,7 @@ $(document).ready(function() {
         var team = $("#team").val();
         var city = $("#city").val();
         var country = $("#country").val();
-        var sex = $("#sex option:selected").text();
+        var sex = $("#sexSelect option:selected").text();
         var kindSport = $("#kind-sport option:selected").text();
 
         console.log(team, city, country, sex, kindSport);
@@ -14,7 +14,7 @@ $(document).ready(function() {
             console.log(team, city, country, sex, kindSport);
             $.ajax({
                 type: "POST",
-                url: "/team",
+                url: "/item",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 data: JSON.stringify({team: team, city: city, country: country, sex: sex, kindSport: kindSport}),

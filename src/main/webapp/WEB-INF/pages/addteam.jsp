@@ -32,9 +32,9 @@
     <div class="col-xs-9">
       <input type="text" class="form-control" id="country" placeholder="Enter country">
     </div>
-    <label class="control-label col-xs-3" for="sexSelect">Sex:</label>
+    <label class="control-label col-xs-3" for="sex">Sex:</label>
     <div class="col-xs-9">
-      <select class="form-control" id="sexSelect">
+      <select class="form-control" id="sex">
         <c:forEach items="${sexList}" var="sex">
           <option>${sex}</option>
         </c:forEach>

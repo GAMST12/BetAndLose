@@ -10,8 +10,8 @@ import ua.skillsup.betandlose.model.KindSportDto;
 import ua.skillsup.betandlose.model.TeamDto;
 import ua.skillsup.betandlose.model.TournamentDto;
 import ua.skillsup.betandlose.model.UserDto;
-import ua.skillsup.betandlose.model.additional.AddTeam;
-import ua.skillsup.betandlose.model.additional.AddTournament;
+import ua.skillsup.betandlose.model.additional.AddingTeam;
+import ua.skillsup.betandlose.model.additional.AddingTournament;
 import ua.skillsup.betandlose.model.additional.Credentials;
 import ua.skillsup.betandlose.model.enumeration.Sex;
 import ua.skillsup.betandlose.model.message.ResponseMessage;
@@ -121,14 +121,14 @@ public class MainController {
 
     @RequestMapping(value = "/tournament", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage addTournament(@RequestBody AddTournament addTournament) {
-        TournamentDto checkTournament =  tournamentDao.findByTournament(addTournament.getTournament());
-        if (Objects.isNull(checkTournament) &&  addTournament.getTournament() != null
-                && addTournament.getKindSport() != null && addTournament.getTournament() != ""
-                && addTournament.getKindSport() != "") {
+    public ResponseMessage addTournament(@RequestBody AddingTournament addingTournament) {
+        TournamentDto checkTournament =  tournamentDao.findByTournament(addingTournament.getTournament());
+        if (Objects.isNull(checkTournament) &&  addingTournament.getTournament() != null
+                && addingTournament.getKindSport() != null && addingTournament.getTournament() != ""
+                && addingTournament.getKindSport() != "") {
             TournamentDto tournamentDto = new TournamentDto();
-            tournamentDto.setTournament(addTournament.getTournament());
-            tournamentDto.setSportDto(kindSportDao.findBySport(addTournament.getKindSport()));
+            tournamentDto.setTournament(addingTournament.getTournament());
+            tournamentDto.setSportDto(kindSportDao.findBySport(addingTournament.getKindSport()));
             System.out.println(tournamentDto);
             tournamentDao.create(tournamentDto);
             return ResponseMessage.okMessage(null);
@@ -139,31 +139,67 @@ public class MainController {
     @RequestMapping(value = "/addteam", method = RequestMethod.GET)
     public String getAddTeam(Model model, HttpServletRequest request) {
         model.addAttribute("kindSportDto", kindSportDao.findAll());
+        model.addAttribute("sexList", Sex.getAllSex());
         return "/addteam";
     }
 
 
     @RequestMapping(value = "/team", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage addTeam(@RequestBody AddTeam addTeam) {
-        TeamDto checkTeam =  teamDao.findByTeamCityCountrySex(addTeam.getTeam(), addTeam.getCity(), addTeam.getCountry(), addTeam.getSex());
+    public ResponseMessage addTeam(@RequestBody AddingTeam addingTeam) {
+        System.out.println(addingTeam.getTeam() + " " + addingTeam.getCity() + " " + addingTeam.getCountry()
+                + " " + addingTeam.getSex() + " " + addingTeam.getKindSport());
+        TeamDto checkTeam =  teamDao.findByTeamCityCountrySex(addingTeam.getTeam(), addingTeam.getCity(), addingTeam.getCountry(), addingTeam.getSex());
         if (Objects.isNull(checkTeam)
-                &&  addTeam.getTeam() != null && addTeam.getTeam() != ""
-                && addTeam.getCity() != null && addTeam.getCity() != ""
-                && addTeam.getCountry() != null && addTeam.getCountry() != ""
-                && addTeam.getSex() != null && addTeam.getSex() != "") {
+                &&  addingTeam.getTeam() != null && addingTeam.getTeam() != ""
+                && addingTeam.getCity() != null && addingTeam.getCity() != ""
+                && addingTeam.getCountry() != null && addingTeam.getCountry() != ""
+                && addingTeam.getSex() != null && addingTeam.getSex() != "") {
             TeamDto teamDto = new TeamDto();
-            teamDto.setTeam(addTeam.getTeam());
-            teamDto.setCity(addTeam.getCity());
-            teamDto.setCountry(addTeam.getCountry());
-            teamDto.setSex(Sex.valueOf(addTeam.getSex()));
-            teamDto.setSportDto(kindSportDao.findBySport(addTeam.getKindSport()));
+            teamDto.setTeam(addingTeam.getTeam());
+            teamDto.setCity(addingTeam.getCity());
+            teamDto.setCountry(addingTeam.getCountry());
+            teamDto.setSex(Sex.valueOf(addingTeam.getSex()));
+            teamDto.setSportDto(kindSportDao.findBySport(addingTeam.getKindSport()));
             System.out.println(teamDto);
             teamDao.create(teamDto);
             return ResponseMessage.okMessage(null);
         }
         return ResponseMessage.errorMessage("Wrong data!");
     }
+
+    @RequestMapping(value = "/additem", method = RequestMethod.GET)
+    public String getAddItem(Model model, HttpServletRequest request) {
+        model.addAttribute("tournamentDto", tournamentDao.findAll());
+        model.addAttribute("teamDto", teamDao.findAll());
+        return "/additem";
+    }
+
+
+    @RequestMapping(value = "/item", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage addItem(@RequestBody AddingTeam addingTeam) {
+        System.out.println(addingTeam.getTeam() + " " + addingTeam.getCity() + " " + addingTeam.getCountry()
+                + " " + addingTeam.getSex() + " " + addingTeam.getKindSport());
+        TeamDto checkTeam =  teamDao.findByTeamCityCountrySex(addingTeam.getTeam(), addingTeam.getCity(), addingTeam.getCountry(), addingTeam.getSex());
+        if (Objects.isNull(checkTeam)
+                &&  addingTeam.getTeam() != null && addingTeam.getTeam() != ""
+                && addingTeam.getCity() != null && addingTeam.getCity() != ""
+                && addingTeam.getCountry() != null && addingTeam.getCountry() != ""
+                && addingTeam.getSex() != null && addingTeam.getSex() != "") {
+            TeamDto teamDto = new TeamDto();
+            teamDto.setTeam(addingTeam.getTeam());
+            teamDto.setCity(addingTeam.getCity());
+            teamDto.setCountry(addingTeam.getCountry());
+            teamDto.setSex(Sex.valueOf(addingTeam.getSex()));
+            teamDto.setSportDto(kindSportDao.findBySport(addingTeam.getKindSport()));
+            System.out.println(teamDto);
+            teamDao.create(teamDto);
+            return ResponseMessage.okMessage(null);
+        }
+        return ResponseMessage.errorMessage("Wrong data!");
+    }
+
 
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)

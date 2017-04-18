@@ -1,6 +1,6 @@
 package ua.skillsup.betandlose.model.additional;
 
-public class AddTeam {
+public class AddingTeam {
     private String team;
     private String city;
     private String country;

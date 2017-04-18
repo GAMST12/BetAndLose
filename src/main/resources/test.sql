@@ -15,9 +15,9 @@ insert into Tournament (trn_tournament, trn_sp_id)
 select	'Ukrainian Premier League 2016/2017', 1;
 
 insert into Team (tms_team, tms_city, tms_country, tms_sex, tms_sp_id)
-select	'Dnipro', 'Dnipro', 'Ukraine', 'MAN', 1;
+select	'Dnipro', 'Dnipro', 'Ukraine', 'Man', 1;
 insert into Team (tms_team, tms_city, tms_country, tms_sex, tms_sp_id)
-select	'Dynamo', 'Kiyv', 'Ukraine', 'MAN', 1;
+select	'Dynamo', 'Kiyv', 'Ukraine', 'Man', 1;
 
 
 insert into Item (itm_dat, itm_tourn_id, itm_team_id_home, itm_team_id_away, itm_koef_w1, itm_koef_x, itm_koef_w2)

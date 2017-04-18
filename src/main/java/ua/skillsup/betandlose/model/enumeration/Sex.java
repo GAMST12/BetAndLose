@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Sex {
-    MAN, WOMAN;
+    Man, Woman;
 
-    public static List<String> getAllKinds() {
-        return Arrays.asList(MAN.name(), WOMAN.name());
+    public static List<String> getAllSex() {
+        return Arrays.asList(Man.name(), Woman.name());
     }
 
 }

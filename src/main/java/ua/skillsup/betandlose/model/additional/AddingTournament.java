@@ -1,6 +1,6 @@
 package ua.skillsup.betandlose.model.additional;
 
-public class AddTournament {
+public class AddingTournament {
 
     private String tournament;
     private String kindSport;
