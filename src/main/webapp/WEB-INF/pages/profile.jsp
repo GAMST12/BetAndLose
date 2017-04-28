@@ -37,7 +37,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="../about">Contact Info</a></li>
-        <li><a id="logout">Logout</a></li>
+        <li><a href="" id="logout">Logout</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
@@ -52,7 +52,7 @@
     <p>Your email: ${userDto.email}</p>
     <p>Your account balance: ${userDto.okv} UAH</p>
     <p>
-      <a class="btn btn-lg btn-primary" id="place-bet" href="../bet" role="button">Place bet &raquo;</a>
+      <a class="btn btn-lg btn-primary" id="place-bet" href="../betting" role="button">Place bet &raquo;</a>
       <a class="btn btn-lg btn-primary" id="deposit" href="../deposit" role="button">Deposit &raquo;</a>
       <a class="btn btn-lg btn-primary" id="withdrawal" href="../withdrawal" role="button">Withdrawal &raquo;</a>
     </p>

@@ -6,14 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.skillsup.betandlose.dao.*;
 import ua.skillsup.betandlose.filter.AuthFilter;
-import ua.skillsup.betandlose.model.KindSportDto;
-import ua.skillsup.betandlose.model.TeamDto;
-import ua.skillsup.betandlose.model.TournamentDto;
-import ua.skillsup.betandlose.model.UserDto;
+import ua.skillsup.betandlose.model.*;
+import ua.skillsup.betandlose.model.additional.AddingItem;
 import ua.skillsup.betandlose.model.additional.AddingTeam;
 import ua.skillsup.betandlose.model.additional.AddingTournament;
-import ua.skillsup.betandlose.model.additional.Credentials;
+import ua.skillsup.betandlose.model.auth.Credentials;
 import ua.skillsup.betandlose.model.enumeration.Sex;
+import ua.skillsup.betandlose.model.filter.ItemFilter;
 import ua.skillsup.betandlose.model.message.ResponseMessage;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +33,9 @@ public class MainController {
     private TournamentDao tournamentDao;
     @Autowired
     private TeamDao teamDao;
+    @Autowired
+    private ItemDao itemDao;
+
 
 
 
@@ -178,28 +180,60 @@ public class MainController {
 
     @RequestMapping(value = "/item", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage addItem(@RequestBody AddingTeam addingTeam) {
-        System.out.println(addingTeam.getTeam() + " " + addingTeam.getCity() + " " + addingTeam.getCountry()
-                + " " + addingTeam.getSex() + " " + addingTeam.getKindSport());
-        TeamDto checkTeam =  teamDao.findByTeamCityCountrySex(addingTeam.getTeam(), addingTeam.getCity(), addingTeam.getCountry(), addingTeam.getSex());
-        if (Objects.isNull(checkTeam)
-                &&  addingTeam.getTeam() != null && addingTeam.getTeam() != ""
-                && addingTeam.getCity() != null && addingTeam.getCity() != ""
-                && addingTeam.getCountry() != null && addingTeam.getCountry() != ""
-                && addingTeam.getSex() != null && addingTeam.getSex() != "") {
-            TeamDto teamDto = new TeamDto();
-            teamDto.setTeam(addingTeam.getTeam());
-            teamDto.setCity(addingTeam.getCity());
-            teamDto.setCountry(addingTeam.getCountry());
-            teamDto.setSex(Sex.valueOf(addingTeam.getSex()));
-            teamDto.setSportDto(kindSportDao.findBySport(addingTeam.getKindSport()));
-            System.out.println(teamDto);
-            teamDao.create(teamDto);
+    public ResponseMessage addItem(@RequestBody AddingItem addingItem) {
+        System.out.println(addingItem.getDate() + " " + addingItem.getTournament()
+                + " " + addingItem.getHomeTeam() + " " + addingItem.getAwayTeam()
+                + " " + addingItem.getKoefWin1() + " " + addingItem.getKoefDraw()
+                + " " + addingItem.getKoefDraw());
+        if ( addingItem.getDate() != null
+                && addingItem.getTournament() != null && addingItem.getTournament() != ""
+                && addingItem.getHomeTeam() != null && addingItem.getHomeTeam() != ""
+                && addingItem.getAwayTeam() != null && addingItem.getAwayTeam() != ""
+                && addingItem.getKoefWin1() != null
+                && addingItem.getKoefDraw() != null
+                && addingItem.getKoefWin2() != null
+                && addingItem.getHomeTeam() != addingItem.getAwayTeam()) {
+
+            String homeTeam = addingItem.getHomeTeam().substring(0,addingItem.getHomeTeam().indexOf("("));
+            String homeCity = addingItem.getHomeTeam().substring(addingItem.getHomeTeam().indexOf("(")+1,addingItem.getHomeTeam().indexOf(","));
+            String homeCountry = addingItem.getHomeTeam().substring(addingItem.getHomeTeam().indexOf(",")+1,addingItem.getHomeTeam().indexOf(";"));
+            String homeSex = addingItem.getHomeTeam().substring(addingItem.getHomeTeam().indexOf(";")+1,addingItem.getHomeTeam().indexOf(")"));
+
+            System.out.println(homeTeam + " " + homeCity + " " + homeCountry + " " + homeSex);
+
+            String awayTeam = addingItem.getAwayTeam().substring(0, addingItem.getAwayTeam().indexOf("("));
+            String awayCity = addingItem.getAwayTeam().substring(addingItem.getAwayTeam().indexOf("(")+1,addingItem.getAwayTeam().indexOf(","));
+            String awayCountry = addingItem.getAwayTeam().substring(addingItem.getAwayTeam().indexOf(",")+1,addingItem.getAwayTeam().indexOf(";"));
+            String awaySex = addingItem.getAwayTeam().substring(addingItem.getAwayTeam().indexOf(";")+1,addingItem.getAwayTeam().indexOf(")"));
+
+            System.out.println(awayTeam + " " + awayCity + " " + awayCountry + " " + awaySex);
+
+            ItemDto itemDto = new ItemDto();
+            itemDto.setItemDate(addingItem.getDate());
+            itemDto.setTournamentDto(tournamentDao.findByTournament(addingItem.getTournament()));
+            itemDto.setHomeTeamDto(teamDao.findByTeamCityCountrySex(homeTeam, homeCity, homeCountry, homeSex));
+            itemDto.setAwayTeamDto(teamDao.findByTeamCityCountrySex(awayTeam, awayCity, awayCountry, awaySex));
+            itemDto.setWin1Koef(addingItem.getKoefWin1());
+            itemDto.setDrawKoef(addingItem.getKoefDraw());
+            itemDto.setWin2Koef(addingItem.getKoefWin2());
+            itemDto.setHomeScore(0);
+            itemDto.setAwayScore(0);
+            itemDto.setFinished(false);
+            System.out.println(itemDto);
+            itemDao.create(itemDto);
             return ResponseMessage.okMessage(null);
         }
         return ResponseMessage.errorMessage("Wrong data!");
     }
 
+    @RequestMapping(value = "/betting", method = RequestMethod.GET)
+    public String bettingPage(Model model, HttpServletRequest request) {
+            ItemFilter itemFilter =  new ItemFilter();
+            itemFilter.setDateItemFrom(LocalDate.now());
+            model.addAttribute("userDto", userDao.findByLogin((String) request.getSession().getAttribute(AuthFilter.AUTH_ATTR_LOGIN)));
+            model.addAttribute("itemDto", itemDao.findByFilter(itemFilter));
+        return "/betting";
+    }
 
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)

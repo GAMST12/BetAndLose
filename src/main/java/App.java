@@ -5,6 +5,7 @@ import ua.skillsup.betandlose.dao.entity.KindSport;
 import ua.skillsup.betandlose.dao.entity.Tournament;
 import ua.skillsup.betandlose.model.*;
 import ua.skillsup.betandlose.model.enumeration.Event;
+import ua.skillsup.betandlose.model.filter.ItemFilter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -155,7 +156,7 @@ public class App {
         */
 
 
-        /*
+
         //Item
         ItemDao itemDao = context.getBean(ItemDao.class);
         TournamentDao tournamentDao = context.getBean(TournamentDao.class);
@@ -198,8 +199,11 @@ public class App {
 
         List<ItemDto> itemList = itemDao.findAll();
         System.out.println(itemList);
-        */
 
+        List<ItemDto> itemListFilter = itemDao.findByFilter(new ItemFilter());
+        System.out.println(itemListFilter);
+
+/*
         //Bet
         BetDao betDao = context.getBean(BetDao.class);
         ItemDao itemDao = context.getBean(ItemDao.class);
@@ -236,7 +240,7 @@ public class App {
 
         List<BetDto> betList = betDao.findAll();
         System.out.println(betList);
-
+*/
 
         context.stop();
         }

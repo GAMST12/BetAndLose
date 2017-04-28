@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 
-  <title>Add tournament</title>
+  <title>Add item</title>
 
   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
   <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
@@ -38,7 +38,7 @@
     <div class="col-xs-9">
       <select class="form-control" id="hometeam">
         <c:forEach items="${teamDto}" var="team">
-          <option>${team.team}(${team.city},${team.country},${team.sex}) </option>
+          <option>${team.team}(${team.city},${team.country};${team.sex}) </option>
         </c:forEach>
       </select>
     </div>
@@ -47,24 +47,24 @@
     <div class="col-xs-9">
       <select class="form-control" id="awayteam">
         <c:forEach items="${teamDto}" var="team">
-          <option>${team.team}(${team.city},${team.country},${team.sex}) </option>
+          <option>${team.team}(${team.city},${team.country};${team.sex}) </option>
         </c:forEach>
       </select>
     </div>
 
-    <label class="control-label col-xs-3" for="date">Win1:</label>
+    <label class="control-label col-xs-3" for="win1">Win1:</label>
     <div class="col-xs-9">
-      <input type="number" name="win1" pattern="[0-9\/]*"  step="0.01"/>
+      <input type="number" class="form-control" id="win1" name="win1" pattern="[0-9\/]*"  step="0.01"/>
     </div>
 
-    <label class="control-label col-xs-3" for="date">Win1:</label>
+    <label class="control-label col-xs-3" for="draw">Draw:</label>
     <div class="col-xs-9">
-      <input type="number" name="win1" pattern="[0-9\/]*"  step="0.01"/>
+      <input type="number" class="form-control" id="draw" name="draw" pattern="[0-9\/]*"  step="0.01"/>
     </div>
 
-    <label class="control-label col-xs-3" for="date">Win1:</label>
+    <label class="control-label col-xs-3" for="win2">Win2:</label>
     <div class="col-xs-9">
-      <input type="number" name="win1" pattern="[0-9\/]*"  step="0.01"/>
+      <input type="number" class="form-control" id="win2" name="win2" pattern="[0-9\/]*"  step="0.01"/>
     </div>
 
   </div>

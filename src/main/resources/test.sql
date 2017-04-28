@@ -23,7 +23,7 @@ select	'Dynamo', 'Kiyv', 'Ukraine', 'Man', 1;
 insert into Item (itm_dat, itm_tourn_id, itm_team_id_home, itm_team_id_away, itm_koef_w1, itm_koef_x, itm_koef_w2)
 select	'2017-01-25', 1, 1, 2, 2.80, 2.70, 2.50;
 insert into Item (itm_dat, itm_tourn_id, itm_team_id_home, itm_team_id_away, itm_koef_w1, itm_koef_x, itm_koef_w2)
-select	'2017-03-30', 1, 2, 1, 1.80, 2.70, 3.80;
+select	'2017-04-30', 1, 2, 1, 1.80, 2.70, 3.80;
 
 
 insert into Bet (bts_item_id, bts_user_id, bts_bet_dat, bts_event, bts_sum)

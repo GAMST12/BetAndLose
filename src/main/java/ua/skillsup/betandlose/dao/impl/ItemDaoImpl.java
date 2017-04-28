@@ -12,7 +12,11 @@ import ua.skillsup.betandlose.dao.entity.Item;
 import ua.skillsup.betandlose.model.ItemDto;
 import ua.skillsup.betandlose.model.TeamDto;
 import ua.skillsup.betandlose.model.TournamentDto;
+import ua.skillsup.betandlose.model.filter.ItemFilter;
 
+import javax.persistence.TemporalType;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,6 +79,21 @@ public class ItemDaoImpl implements ItemDao{
                 .map(EntityDtoConverter::convert)
                 .collect(Collectors.toList());
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<ItemDto> findByFilter(ItemFilter itemFilter) {
+        LocalDate dateFrom = itemFilter.getDateItemFrom().plusDays(1);
+        LocalDate dateTo = itemFilter.getDateItemTo();
+
+        List<Item> list =  sessionFactory.getCurrentSession()
+                .createQuery("select i from Item i where i.itemDate > :dateFrom " +
+                        "and i.itemDate <= :dateTo").
+                        setParameter("dateFrom", dateFrom).
+                        setParameter("dateTo", dateTo).list();
+        return list.stream()
+                .map(EntityDtoConverter::convert)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = false)
