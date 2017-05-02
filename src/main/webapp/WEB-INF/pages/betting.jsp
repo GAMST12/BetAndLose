@@ -61,15 +61,15 @@
       </thead>
       <tbody>
       <c:forEach items="${itemDto}" var="item">
-        <tr>
+        <tr id="${item.id}">
           <td id="item-date">${item.itemDate}</td>
           <td id="sport">${item.tournamentDto.sportDto.sport}</td>
           <td id="tournament">${item.tournamentDto.tournament}</td>
-          <td id="team1">${item.homeTeamDto.team}(${item.homeTeamDto.city})</td>
-          <td id="team2">${item.awayTeamDto.team}(${item.awayTeamDto.city})</td>
-          <td id="win1" class="koef nonselected">${item.win1Koef}</td>
-          <td id="draw" class="koef nonselected">${item.drawKoef}</td>
-          <td id="win2" class="koef nonselected">${item.win2Koef}</td>
+          <td id="team1">${item.homeTeamDto.team}(${item.homeTeamDto.city}, ${item.homeTeamDto.country}; ${item.homeTeamDto.sex})</td>
+          <td id="team2">${item.awayTeamDto.team}(${item.awayTeamDto.city}, ${item.awayTeamDto.country}; ${item.awayTeamDto.sex})</td>
+          <td id="win1" class="koef"><a class="nonselected">${item.win1Koef}</a></td>
+          <td id="draw" class="koef"><a class="nonselected">${item.drawKoef}</a></td>
+          <td id="win2" class="koef"><a class="nonselected">${item.win2Koef}</a></td>
         </tr>
       </c:forEach>
 

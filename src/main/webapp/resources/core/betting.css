@@ -15,16 +15,16 @@ ul.navbar-nav li a {
     cursor: hand;
 }
 
-.koef {
-    cursor: hand;
+.koef a{
+    cursor: pointer;
 }
 
 
-.selected {
-    background-color: green;
+.koef a.selected {
+    background-color: lime;
 }
 
-.nonselected {
+.koef a.nonselected {
     background-color: inherit;
 }
 

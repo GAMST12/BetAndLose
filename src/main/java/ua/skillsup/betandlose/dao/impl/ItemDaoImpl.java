@@ -83,7 +83,7 @@ public class ItemDaoImpl implements ItemDao{
 
     @Transactional(readOnly = true)
     public List<ItemDto> findByFilter(ItemFilter itemFilter) {
-        LocalDate dateFrom = itemFilter.getDateItemFrom().plusDays(1);
+        LocalDate dateFrom = itemFilter.getDateItemFrom();
         LocalDate dateTo = itemFilter.getDateItemTo();
 
         List<Item> list =  sessionFactory.getCurrentSession()
