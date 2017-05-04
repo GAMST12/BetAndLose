@@ -58,7 +58,7 @@ public class MainController {
                 && userDto.getPassword() != null && userDto.getFirstName() != null
                 && userDto.getLastName() != null && userDto.getEmail() != null) {
             userDto.setLoginDate(LocalDate.now());
-            //userDto.setOkv(BigDecimal.valueOf(0.0));
+            userDto.setOkv(BigDecimal.valueOf(0.0));
             userDto.setOkv(BigDecimal.valueOf(1000.0));
             userDto.setRole("U");
             userDao.create(userDto);
