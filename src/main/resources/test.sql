@@ -26,10 +26,10 @@ insert into Item (itm_dat, itm_tourn_id, itm_team_id_home, itm_team_id_away, itm
 select	'2017-05-30', 1, 2, 1, 1.80, 2.70, 3.80;
 
 
-insert into Bet (bts_item_id, bts_user_id, bts_bet_dat, bts_event, bts_sum)
-select	1, 1, '2017-01-01', 'WIN1', 100.00;
-insert into Bet (bts_item_id, bts_user_id, bts_bet_dat, bts_event, bts_sum)
-select	2, 1, '2017-02-20', 'DRAW', 100.00;
+insert into Bet (bts_item_id, bts_user_id, bts_bet_dat, bts_event, bts_koef, bts_sum)
+select	1, 1, '2017-01-01', 'WIN1', 2.80, 100.00;
+insert into Bet (bts_item_id, bts_user_id, bts_bet_dat, bts_event, bts_koef, bts_sum)
+select	2, 1, '2017-02-20', 'DRAW', 2.70, 100.00;
 
 
 /*

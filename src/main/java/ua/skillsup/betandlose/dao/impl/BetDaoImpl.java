@@ -91,7 +91,7 @@ public class BetDaoImpl implements BetDao{
 
     @Transactional(readOnly = false)
     public void delete(BetDto betDto) {
-        Bet bet= EntityDtoConverter.convert(betDto);
+        Bet bet = EntityDtoConverter.convert(betDto);
         Session session = sessionFactory.getCurrentSession();
         try {
             session.delete(bet);

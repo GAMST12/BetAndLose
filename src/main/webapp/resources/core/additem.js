@@ -22,10 +22,6 @@ $(document).ready(function() {
                 dataType: "json",
                 data: JSON.stringify({date: date, tournament: tournament, homeTeam: hometeam,
                     awayTeam: awayteam, koefWin1: win1, koefDraw: draw, koefWin2: win2}),
-/*
-                data: JSON.stringify({date: date, tournament: tournament, homeTeam: hometeam,
-                    awayTeam: awayteam, koefWin1: win1, koefDraw: draw, koefWin2: win2}),
-*/
                 success: function (data) {
                     console.log(data);
                     if (data.status === "OK") {

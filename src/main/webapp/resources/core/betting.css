@@ -28,4 +28,6 @@ ul.navbar-nav li a {
     background-color: inherit;
 }
 
-
+input#sum.form-control {
+    width: 200px;
+}

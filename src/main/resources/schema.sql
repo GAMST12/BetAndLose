@@ -77,6 +77,7 @@ CREATE TABLE IF NOT EXISTS Bet (
   bts_user_id INT NOT NULL,
   bts_bet_dat DATETIME NOT NULL,
   bts_event VARCHAR(8) NOT NULL,
+  bts_koef NUMERIC(15,2) NOT NULL,
   bts_sum NUMERIC(15,2) NOT NULL,
   bts_total NUMERIC(15,2) NOT NULL DEFAULT 0.0,
   bts_fl_finished BIT(1) NOT NULL DEFAULT 0,

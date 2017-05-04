@@ -73,6 +73,7 @@
         <th>Team1</th>
         <th>Team2</th>
         <th>Event</th>
+        <th>Koef</th>
         <th>Score1</th>
         <th>Score2</th>
         <th>Sum</th>
@@ -82,13 +83,14 @@
       </thead>
       <tbody>
         <c:forEach items="${betDto}" var="bet">
-          <tr>
+          <tr id="${bet.id}">
             <td id="bet-date">${bet.betDate}</td>
             <td id="sport">${bet.itemDto.tournamentDto.sportDto.sport}</td>
             <td id="tournament">${bet.itemDto.tournamentDto.tournament}</td>
             <td id="team1">${bet.itemDto.homeTeamDto.team}(${bet.itemDto.homeTeamDto.city})</td>
             <td id="team2">${bet.itemDto.awayTeamDto.team}(${bet.itemDto.awayTeamDto.city})</td>
             <td id="event">${bet.event}</td>
+            <td id="koef">${bet.koef}</td>
             <td id="score1">${bet.itemDto.homeScore}</td>
             <td id="score2">${bet.itemDto.awayScore}</td>
             <td id="sum">${bet.betSum}</td>

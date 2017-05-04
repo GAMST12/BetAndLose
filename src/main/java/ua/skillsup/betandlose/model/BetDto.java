@@ -12,6 +12,7 @@ public class BetDto {
     private UserDto userDto;
     private LocalDate betDate;
     private Event event;
+    private BigDecimal koef;
     private BigDecimal betSum;
     private BigDecimal betResultSum;
     private boolean finished;
@@ -56,6 +57,14 @@ public class BetDto {
         this.event = event;
     }
 
+    public BigDecimal getKoef() {
+        return koef;
+    }
+
+    public void setKoef(BigDecimal koef) {
+        this.koef = koef;
+    }
+
     public BigDecimal getBetSum() {
         return betSum;
     }
@@ -95,6 +104,7 @@ public class BetDto {
         if (betSum != null ? !betSum.equals(betDto.betSum) : betDto.betSum != null) return false;
         if (event != betDto.event) return false;
         if (itemDto != null ? !itemDto.equals(betDto.itemDto) : betDto.itemDto != null) return false;
+        if (koef != null ? !koef.equals(betDto.koef) : betDto.koef != null) return false;
         if (userDto != null ? !userDto.equals(betDto.userDto) : betDto.userDto != null) return false;
 
         return true;
@@ -107,6 +117,7 @@ public class BetDto {
         result = 31 * result + (userDto != null ? userDto.hashCode() : 0);
         result = 31 * result + (betDate != null ? betDate.hashCode() : 0);
         result = 31 * result + (event != null ? event.hashCode() : 0);
+        result = 31 * result + (koef != null ? koef.hashCode() : 0);
         result = 31 * result + (betSum != null ? betSum.hashCode() : 0);
         result = 31 * result + (betResultSum != null ? betResultSum.hashCode() : 0);
         result = 31 * result + (finished ? 1 : 0);
@@ -120,10 +131,11 @@ public class BetDto {
                 ", itemDto=" + itemDto +
                 ", userDto=" + userDto +
                 ", betDate=" + betDate +
-                ", event='" + event + '\'' +
+                ", event=" + event +
+                ", koef=" + koef +
                 ", betSum=" + betSum +
                 ", betResultSum=" + betResultSum +
-                ", finished='" + finished + '\'' +
+                ", finished=" + finished +
                 '}';
     }
 }

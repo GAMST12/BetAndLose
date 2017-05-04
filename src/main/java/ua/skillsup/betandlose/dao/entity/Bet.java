@@ -32,6 +32,9 @@ public class Bet {
     @Enumerated(EnumType.STRING)
     private Event event;
 
+    @Column(name = "bts_koef", nullable = false)
+    private BigDecimal koef;
+
     @Column(name = "bts_sum", nullable = false)
     private BigDecimal betSum;
 
@@ -81,6 +84,14 @@ public class Bet {
         this.event = event;
     }
 
+    public BigDecimal getKoef() {
+        return koef;
+    }
+
+    public void setKoef(BigDecimal koef) {
+        this.koef = koef;
+    }
+
     public BigDecimal getBetSum() {
         return betSum;
     }
@@ -119,6 +130,7 @@ public class Bet {
         if (betSum != null ? !betSum.equals(bet.betSum) : bet.betSum != null) return false;
         if (event != bet.event) return false;
         if (item != null ? !item.equals(bet.item) : bet.item != null) return false;
+        if (koef != null ? !koef.equals(bet.koef) : bet.koef != null) return false;
         if (user != null ? !user.equals(bet.user) : bet.user != null) return false;
 
         return true;
@@ -131,6 +143,7 @@ public class Bet {
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (betDate != null ? betDate.hashCode() : 0);
         result = 31 * result + (event != null ? event.hashCode() : 0);
+        result = 31 * result + (koef != null ? koef.hashCode() : 0);
         result = 31 * result + (betSum != null ? betSum.hashCode() : 0);
         result = 31 * result + (betResultSum != null ? betResultSum.hashCode() : 0);
         result = 31 * result + (finished ? 1 : 0);
@@ -144,10 +157,11 @@ public class Bet {
                 ", item=" + item +
                 ", user=" + user +
                 ", betDate=" + betDate +
-                ", event='" + event + '\'' +
+                ", event=" + event +
+                ", koef=" + koef +
                 ", betSum=" + betSum +
                 ", betResultSum=" + betResultSum +
-                ", finished='" + finished + '\'' +
+                ", finished=" + finished +
                 '}';
     }
 }

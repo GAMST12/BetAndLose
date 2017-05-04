@@ -12,5 +12,5 @@
 
 
 ul.navbar-nav li a {
-    cursor: hand;
+    cursor: pointer;
 }

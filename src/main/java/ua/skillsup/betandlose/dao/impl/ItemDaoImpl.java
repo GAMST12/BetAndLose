@@ -1,5 +1,6 @@
 package ua.skillsup.betandlose.dao.impl;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.exception.ConstraintViolationException;
@@ -85,12 +86,15 @@ public class ItemDaoImpl implements ItemDao{
     public List<ItemDto> findByFilter(ItemFilter itemFilter) {
         LocalDate dateFrom = itemFilter.getDateItemFrom();
         LocalDate dateTo = itemFilter.getDateItemTo();
+        Boolean finished = itemFilter.isFinished();
 
         List<Item> list =  sessionFactory.getCurrentSession()
                 .createQuery("select i from Item i where i.itemDate > :dateFrom " +
-                        "and i.itemDate <= :dateTo").
+                        "and i.itemDate <= :dateTo " +
+                        "and i.finished = :finished").
                         setParameter("dateFrom", dateFrom).
-                        setParameter("dateTo", dateTo).list();
+                        setParameter("dateTo", dateTo).
+                        setBoolean("finished", finished).list();
         return list.stream()
                 .map(EntityDtoConverter::convert)
                 .collect(Collectors.toList());

@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import ua.skillsup.betandlose.dao.*;
 import ua.skillsup.betandlose.filter.AuthFilter;
 import ua.skillsup.betandlose.model.*;
-import ua.skillsup.betandlose.model.additional.AddingItem;
-import ua.skillsup.betandlose.model.additional.AddingTeam;
-import ua.skillsup.betandlose.model.additional.AddingTournament;
+import ua.skillsup.betandlose.model.additional.*;
 import ua.skillsup.betandlose.model.auth.Credentials;
+import ua.skillsup.betandlose.model.enumeration.Event;
 import ua.skillsup.betandlose.model.enumeration.Sex;
 import ua.skillsup.betandlose.model.filter.ItemFilter;
 import ua.skillsup.betandlose.model.message.ResponseMessage;
@@ -19,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Controller
@@ -58,7 +58,8 @@ public class MainController {
                 && userDto.getPassword() != null && userDto.getFirstName() != null
                 && userDto.getLastName() != null && userDto.getEmail() != null) {
             userDto.setLoginDate(LocalDate.now());
-            userDto.setOkv(BigDecimal.valueOf(0.0));
+            //userDto.setOkv(BigDecimal.valueOf(0.0));
+            userDto.setOkv(BigDecimal.valueOf(1000.0));
             userDto.setRole("U");
             userDao.create(userDto);
             return ResponseMessage.okMessage(null);
@@ -234,6 +235,99 @@ public class MainController {
             model.addAttribute("itemDto", itemDao.findByFilter(itemFilter));
         return "/betting";
     }
+
+
+    @RequestMapping(value = "/bet", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage addBet(@RequestBody AddingBet addingBet,
+                                HttpServletRequest request) {
+        UserDto userDto =  userDao.findByLogin((String) request.getSession().getAttribute(AuthFilter.AUTH_ATTR_LOGIN));
+        ItemDto itemDto = itemDao.findById(addingBet.getItemId());
+        if (Objects.nonNull(userDto) && Objects.nonNull(itemDto) && userDto.getOkv().doubleValue() >=  addingBet.getSum().doubleValue()) {
+            //System.out.println(addingBet.getItemId() + " " + addingBet.getEvent() + " " + addingBet.getKoef() + " " + addingBet.getSum());
+            BetDto betDto = new BetDto();
+            betDto.setItemDto(itemDto);
+            betDto.setUserDto(userDto);
+            betDto.setBetDate(LocalDate.now());
+            betDto.setEvent(Event.valueOf(addingBet.getEvent()));
+            betDto.setKoef(addingBet.getKoef());
+            betDto.setBetSum(addingBet.getSum());
+            betDto.setBetResultSum(BigDecimal.valueOf(0.0));
+            betDto.setFinished(false);
+            betDao.create(betDto);
+            userDto.setOkv(BigDecimal.valueOf(userDto.getOkv().doubleValue() - addingBet.getSum().doubleValue()));
+            userDao.update(userDto);
+            return ResponseMessage.okMessage(null);
+        }
+        return ResponseMessage.errorMessage("Wrong data!");
+    }
+
+
+    @RequestMapping(value = "/addresult", method = RequestMethod.GET)
+    public String addResult(Model model, HttpServletRequest request) {
+        ItemFilter itemFilter =  new ItemFilter();
+        itemFilter.setFinished(false);
+        //itemFilter.setDateItemTo(LocalDate.now().plusDays(1));
+        model.addAttribute("itemDto", itemDao.findByFilter(itemFilter));
+        return "/addresult";
+    }
+
+    @RequestMapping(value = "/result", method = RequestMethod.POST)
+    @ResponseBody
+    public ResponseMessage addResult(@RequestBody AddingResult addingResult,
+                                  HttpServletRequest request) {
+        ItemDto itemDto = itemDao.findById(addingResult.getItemId());
+        System.out.println(itemDto.getId());
+        List<BetDto> betDtoList = betDao.findByItem(itemDto);
+
+        System.out.println(itemDto);
+        System.out.println(betDtoList);
+        System.out.println(addingResult.getItemId() + " " + addingResult.getHomeScore() + " " + addingResult.getAwayScore());
+        if (Objects.nonNull(itemDto)) {
+            itemDto.setHomeScore(addingResult.getHomeScore());
+            itemDto.setAwayScore(addingResult.getAwayScore());
+            itemDto.setFinished(true);
+            System.out.println(itemDto.getId());
+            itemDao.update(itemDto);
+
+            if (Objects.nonNull(betDtoList)) {
+                for (BetDto betDto : betDtoList) {
+                    System.out.println("id = " + betDto.getId());
+                    betDto.setFinished(true);
+                    betDao.update(betDto);
+                    if (betDto.getEvent().equals(Event.WIN1) && addingResult.getHomeScore() > addingResult.getAwayScore()) {
+                        betDto.setBetResultSum(BigDecimal.valueOf(betDto.getBetSum().doubleValue() * betDto.getKoef().doubleValue()));
+                        UserDto userDto = betDto.getUserDto();
+                        userDto.setOkv(BigDecimal.valueOf(userDto.getOkv().doubleValue() + (betDto.getBetSum().doubleValue() * betDto.getKoef().doubleValue())));
+                        userDao.update(userDto);
+                        betDao.update(betDto);
+                    }
+
+                    if (betDto.getEvent().equals(Event.WIN2) && addingResult.getHomeScore() < addingResult.getAwayScore()) {
+                        betDto.setBetResultSum(BigDecimal.valueOf(betDto.getBetSum().doubleValue() * betDto.getKoef().doubleValue()));
+                        UserDto userDto = betDto.getUserDto();
+                        userDto.setOkv(BigDecimal.valueOf(userDto.getOkv().doubleValue() + (betDto.getBetSum().doubleValue() * betDto.getKoef().doubleValue())));
+                        userDao.update(userDto);
+                        betDao.update(betDto);
+                    }
+
+                    if (betDto.getEvent().equals(Event.DRAW) && addingResult.getHomeScore() == addingResult.getAwayScore()) {
+                        betDto.setBetResultSum(BigDecimal.valueOf(betDto.getBetSum().doubleValue() * betDto.getKoef().doubleValue()));
+                        UserDto userDto = betDto.getUserDto();
+                        userDto.setOkv(BigDecimal.valueOf(userDto.getOkv().doubleValue() + (betDto.getBetSum().doubleValue() * betDto.getKoef().doubleValue())));
+                        userDao.update(userDto);
+                        betDao.update(betDto);
+                    }
+                }
+            }
+
+            return ResponseMessage.okMessage(null);
+        }
+        return ResponseMessage.errorMessage("Wrong data!");
+    }
+
+
+
 
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)

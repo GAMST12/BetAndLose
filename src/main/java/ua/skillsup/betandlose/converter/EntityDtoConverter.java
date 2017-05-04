@@ -164,6 +164,7 @@ public final class EntityDtoConverter {
         bet.setUser(convert(betDto.getUserDto()));
         bet.setBetDate(betDto.getBetDate());
         bet.setEvent(betDto.getEvent());
+        bet.setKoef(betDto.getKoef());
         bet.setBetSum(betDto.getBetSum());
         bet.setBetResultSum(betDto.getBetResultSum());
         bet.setFinished(betDto.isFinished());
@@ -175,11 +176,12 @@ public final class EntityDtoConverter {
             return null;
         }
         BetDto betDto = new BetDto();
-        betDto.setId(betDto.getId());
+        betDto.setId(bet.getId());
         betDto.setItemDto(convert(bet.getItem()));
         betDto.setUserDto(convert(bet.getUser()));
         betDto.setBetDate(bet.getBetDate());
         betDto.setEvent(bet.getEvent());
+        betDto.setKoef(bet.getKoef());
         betDto.setBetSum(bet.getBetSum());
         betDto.setBetResultSum(bet.getBetResultSum());
         betDto.setFinished(bet.isFinished());
