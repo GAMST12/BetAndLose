@@ -34,6 +34,8 @@
       <ul class="nav navbar-nav">
         <li class="active"><a id="home-tab">Home</a></li>
         <li><a id="history-tab">Bet History</a></li>
+        <li><a id="deposit-tab">Deposit</a></li>
+        <li><a id="withdrawal-tab">Withdrawal</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="../about">Contact Info</a></li>
@@ -53,8 +55,10 @@
     <p>Your account balance: ${userDto.okv} UAH</p>
     <p>
       <a class="btn btn-lg btn-primary" id="place-bet" href="../betting" role="button">Place bet &raquo;</a>
+<%--
       <a class="btn btn-lg btn-primary" id="deposit" href="../deposit" role="button">Deposit &raquo;</a>
       <a class="btn btn-lg btn-primary" id="withdrawal" href="../withdrawal" role="button">Withdrawal &raquo;</a>
+--%>
     </p>
   </div>
 

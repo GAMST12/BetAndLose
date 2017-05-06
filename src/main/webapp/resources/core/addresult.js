@@ -24,6 +24,7 @@ $(document).ready(function() {
                     console.log(data);
                     if (data.status === "OK") {
                         alert("Successfully added");
+                        location.reload(true);
                     } else {
                         alert("Adding failed");
                     }
