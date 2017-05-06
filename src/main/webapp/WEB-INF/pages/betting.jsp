@@ -82,7 +82,7 @@
           <input type="text" class="form-control" id="sum" placeholder="Bet sum">
           <input id="save" type="submit" class="btn btn-lg btn-primary" value="Bet">
           <a class="btn btn-lg btn-default" id="back" href="../profile" role="button">Back to profile</a>
-        </p>>
+        </p>
       </div>
     </div>
 
