@@ -5,10 +5,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class AddingItem {
+
     private LocalDate date;
-    private String tournament;
-    private String homeTeam;
-    private String awayTeam;
+    private long tournamentId;
+    private long homeTeamId;
+    private long awayTeamId;
     private BigDecimal koefWin1;
     private BigDecimal koefDraw;
     private BigDecimal koefWin2;
@@ -21,28 +22,28 @@ public class AddingItem {
         this.date = LocalDate.parse(stringDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
-    public String getTournament() {
-        return tournament;
+    public long getTournamentId() {
+        return tournamentId;
     }
 
-    public void setTournament(String tournament) {
-        this.tournament = tournament;
+    public void setTournamentId(long tournamentId) {
+        this.tournamentId = tournamentId;
     }
 
-    public String getHomeTeam() {
-        return homeTeam;
+    public long getHomeTeamId() {
+        return homeTeamId;
     }
 
-    public void setHomeTeam(String homeTeam) {
-        this.homeTeam = homeTeam;
+    public void setHomeTeamId(long homeTeamId) {
+        this.homeTeamId = homeTeamId;
     }
 
-    public String getAwayTeam() {
-        return awayTeam;
+    public long getAwayTeamId() {
+        return awayTeamId;
     }
 
-    public void setAwayTeam(String awayTeam) {
-        this.awayTeam = awayTeam;
+    public void setAwayTeamId(long awayTeamId) {
+        this.awayTeamId = awayTeamId;
     }
 
     public BigDecimal getKoefWin1() {

@@ -30,11 +30,6 @@ $(document).ready(function() {
         }
         var sum = $("#sum").val();
 
-
-                if (itemId != '' && event!= '' && koef!= '' &&  sum!= '' && sum!= 0) {
-                    console.log(event);
-                    console.log(koef);
-                    console.log(sum);
                     $.ajax({
                         type: "POST",
                         url: "/bet",
@@ -54,9 +49,6 @@ $(document).ready(function() {
                         }
                     });
                     return false;
-                } else {
-                    console.log("WRONG!");
-                }
 
     });
 
@@ -71,5 +63,4 @@ $(document).ready(function() {
             }
         });
     });
-
 });

@@ -9,7 +9,7 @@ $(document).ready(function() {
 
         console.log(login, password);
 
-        if (login!= '' && (confirmPassword === password) && password!='') {
+        if (confirmPassword === password) {
             $.ajax({
                 type: "POST",
                 url: "/register",
@@ -23,8 +23,10 @@ $(document).ready(function() {
                     console.log("OK");
                     console.log(data);
                     if (data.status === "OK") {
+                        alert("Successfully registered");
                         window.location.href = "/login";
                     } else {
+                        alert("Register error");
                         window.location.href = "/login";
                     }
                 },

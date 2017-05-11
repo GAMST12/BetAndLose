@@ -23,7 +23,6 @@ public class BetDaoImpl implements BetDao{
     @Autowired
     private SessionFactory sessionFactory;
 
-
     @Transactional(readOnly = true)
     public List<BetDto> findAll() {
         List<Bet> list = sessionFactory.getCurrentSession()

@@ -1,5 +1,7 @@
 package ua.skillsup.betandlose.filter;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,7 +29,7 @@ public class AuthFilter implements Filter {
 
         LocalDateTime logInTime = (LocalDateTime) session.getAttribute(AUTH_ATTR_DATE);
         if (Objects.isNull(logInTime)
-                || logInTime.plusMinutes(10).isBefore(LocalDateTime.now())) {
+                || logInTime.plusMinutes(60).isBefore(LocalDateTime.now())) {
             ((HttpServletResponse) servletResponse).sendRedirect("/login");
         }
 

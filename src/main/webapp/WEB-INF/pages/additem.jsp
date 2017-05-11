@@ -29,7 +29,7 @@
     <div class="col-xs-9">
       <select class="form-control" id="tournament">
         <c:forEach items="${tournamentDto}" var="tournament">
-          <option>${tournament.tournament}</option>
+          <option id="${tournament.id}">${tournament.tournament}</option>
         </c:forEach>
       </select>
     </div>
@@ -38,7 +38,7 @@
     <div class="col-xs-9">
       <select class="form-control" id="hometeam">
         <c:forEach items="${teamDto}" var="team">
-          <option>${team.team}(${team.city},${team.country};${team.sex}) </option>
+          <option id="${team.id}">${team.team}(${team.city},${team.country};${team.sex}) </option>
         </c:forEach>
       </select>
     </div>
@@ -47,7 +47,7 @@
     <div class="col-xs-9">
       <select class="form-control" id="awayteam">
         <c:forEach items="${teamDto}" var="team">
-          <option>${team.team}(${team.city},${team.country};${team.sex}) </option>
+          <option id="${team.id}">${team.team}(${team.city},${team.country};${team.sex}) </option>
         </c:forEach>
       </select>
     </div>

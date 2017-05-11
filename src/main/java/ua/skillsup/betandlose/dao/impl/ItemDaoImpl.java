@@ -1,6 +1,5 @@
 package ua.skillsup.betandlose.dao.impl;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.exception.ConstraintViolationException;
@@ -15,9 +14,7 @@ import ua.skillsup.betandlose.model.TeamDto;
 import ua.skillsup.betandlose.model.TournamentDto;
 import ua.skillsup.betandlose.model.filter.ItemFilter;
 
-import javax.persistence.TemporalType;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 

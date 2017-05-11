@@ -4,8 +4,6 @@ $(document).ready(function() {
         var tournament = $("#tournament").val();
         var kindSport = $("#kind-sport option:selected").text();
 
-        if (tournament != '' && kindSport!= '') {
-            console.log(tournament, kindSport);
             $.ajax({
                 type: "POST",
                 url: "/tournament",
@@ -25,8 +23,5 @@ $(document).ready(function() {
                 }
             });
             return false;
-        } else {
-            console.log("WRONG!");
-        }
     });
 });

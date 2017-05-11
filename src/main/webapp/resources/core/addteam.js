@@ -8,10 +8,6 @@ $(document).ready(function() {
         var sex = $("#sex option:selected").text();
         var kindSport = $("#kind-sport option:selected").text();
 
-        console.log(team, city, country, sex, kindSport);
-
-        if (team != '' && city!= '' && country!= '' &&  kindSport!= '' && sex!= '') {
-            console.log(team, city, country, sex, kindSport);
             $.ajax({
                 type: "POST",
                 url: "/team",
@@ -31,8 +27,5 @@ $(document).ready(function() {
                 }
             });
             return false;
-        } else {
-            console.log("WRONG!");
-        }
     });
 });

@@ -3,7 +3,6 @@ $(document).ready(function() {
         var kindSport = $("#kind-sport").val();
 
 
-        if (kindSport!= '') {
             $.ajax({
                 type: "POST",
                 url: "/kindSport",
@@ -25,8 +24,5 @@ $(document).ready(function() {
                 }
             });
             return false;
-        } else {
-            console.log("WRONG!");
-        }
     });
 });
