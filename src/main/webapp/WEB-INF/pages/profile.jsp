@@ -55,10 +55,6 @@
     <p>Your account balance: ${userDto.okv} UAH</p>
     <p>
       <a class="btn btn-lg btn-primary" id="place-bet" href="../betting" role="button">Place bet &raquo;</a>
-<%--
-      <a class="btn btn-lg btn-primary" id="deposit" href="../deposit" role="button">Deposit &raquo;</a>
-      <a class="btn btn-lg btn-primary" id="withdrawal" href="../withdrawal" role="button">Withdrawal &raquo;</a>
---%>
     </p>
   </div>
 
@@ -68,6 +64,7 @@
 
   <!-- Main component for a primary marketing message or call to action -->
   <div class="jumbotron">
+    <h2>${userDto.login} bet history</h2>
     <table class="table table-hover">
       <thead>
       <tr>
@@ -112,6 +109,57 @@
     </table>
 
   </div>
+
+</div> <!-- /container -->
+
+<div class="container body hidden" id="deposit-panel" >
+
+  <!-- Main component for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <h2>Deposit</h2>
+    <form id="deposit-form" class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-xs-3" for="deposit-sum">Deposit sum:</label>
+      <div class="col-xs-9">
+        <input type="number" class="form-control" id="deposit-sum" name="deposit-sum" pattern="[0-9\/]*"  step="1.0"/>
+      </div>
+    </div>
+
+  <div class="form-group">
+    <div class="col-xs-offset-3 col-xs-9">
+      <input id="deposit-save" type="submit" class="btn btn-lg btn-primary" value="Submit">
+      <input type="reset" class="btn btn-lg btn-default" value="Clean the form">
+      <a class="btn btn-lg btn-default" href="../profile" role="button">Back</a>
+    </div>
+  </div>
+  </form>
+
+  </div>
+
+</div> <!-- /container -->
+
+  <div class="container body hidden" id="withdrawal-panel" >
+
+  <!-- Main component for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <h2>Withdrawal</h2>
+    <form id="withdrawal-form" class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-xs-3" for="withdrawal-sum">Withdrawal sum:</label>
+      <div class="col-xs-9">
+        <input type="number" class="form-control" id="withdrawal-sum" name="withdrawal-sum" pattern="[0-9\/]*"  step="1.0"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-xs-offset-3 col-xs-9">
+        <input id="withdrawal-save" type="submit" class="btn btn-lg btn-primary" value="Submit">
+        <input type="reset" class="btn btn-lg btn-default" value="Clean the form">
+        <a class="btn btn-lg btn-default" href="../profile" role="button">Back</a>
+      </div>
+    </div>
+</form>
+</div>
 
 </div> <!-- /container -->
 

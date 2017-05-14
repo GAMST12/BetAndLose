@@ -51,7 +51,7 @@ public class BetServiceImpl implements BetService{
             newUserDto.setFirstName(firstName);
             newUserDto.setLastName(lastName);
             newUserDto.setLoginDate(LocalDate.now());
-            newUserDto.setOkv(BigDecimal.valueOf(1000.0));
+            newUserDto.setOkv(BigDecimal.valueOf(0.0));
             newUserDto.setRole("U");
             userDao.create(newUserDto);
             log.info("Create new user: " + login);
@@ -207,6 +207,34 @@ public class BetServiceImpl implements BetService{
         }
         log.error("Can't add new tournament: " + tournament + ": " + kindSport );
         return ResponseMessage.errorMessage("Wrong data!");
+    }
+
+    @Override
+    public ResponseMessage deposit(String login, BigDecimal sum) {
+        UserDto userDto = userDao.findByLogin(login);
+        if (Objects.nonNull(userDto) && !CheckingData.checkAnyNumbersIsEmpty(sum)) {
+                        userDto.setOkv(BigDecimal.valueOf(userDto.getOkv().doubleValue() + (sum.doubleValue())));
+                        userDao.update(userDto);
+            log.info("Add deposit for account: " + " login - " + login + ", sum - " +sum);
+            return ResponseMessage.okMessage(null);
+        }
+        log.error("Can't add deposit for account: " + " login - " + login + ", sum - " + sum);
+        return ResponseMessage.errorMessage("Wrong data!");
+    }
+
+    @Override
+    public ResponseMessage withdraw(String login, BigDecimal sum) {
+        UserDto userDto = userDao.findByLogin(login);
+        if (Objects.nonNull(userDto) && !CheckingData.checkAnyNumbersIsEmpty(sum)
+                && (userDto.getOkv().doubleValue() - (sum.doubleValue()))>=0) {
+            userDto.setOkv(BigDecimal.valueOf(userDto.getOkv().doubleValue() - (sum.doubleValue())));
+            userDao.update(userDto);
+            log.info("Withdraw from account: " + " login - " + login + ", sum - " +sum);
+            return ResponseMessage.okMessage(null);
+        }
+        log.error("Can't withdraw from account: " + " login - " + login + ", sum - " + sum);
+        return ResponseMessage.errorMessage("Wrong data!");
+
     }
 
 }

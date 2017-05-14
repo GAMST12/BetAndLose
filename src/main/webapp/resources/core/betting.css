@@ -28,6 +28,7 @@ ul.navbar-nav li a {
     background-color: inherit;
 }
 
-input#sum.form-control {
+input#bet-sum.form-control {
     width: 200px;
 }
+

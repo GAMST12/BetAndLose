@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Transactional
 public interface BetService {
     /**
      * Create new user
@@ -89,5 +88,21 @@ public interface BetService {
      *
      */
     ResponseMessage addTournament(String tournament, String kindSport);
+
+    /**
+     * Deposit money in account
+     * @param login account's login
+     * @param sum deposit's sum
+     *
+     */
+    ResponseMessage deposit(String login, BigDecimal sum);
+
+    /**
+     * Withdraw money from account
+     * @param login account's login
+     * @param sum withdraw's sum
+     *
+     */
+    ResponseMessage withdraw(String login, BigDecimal sum);
 
 }

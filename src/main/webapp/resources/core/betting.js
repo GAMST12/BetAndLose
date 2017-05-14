@@ -28,7 +28,8 @@ $(document).ready(function() {
             event = "WIN2";
             koef = ($("#"+itemId).children("#win2").children("a").html());
         }
-        var sum = $("#sum").val();
+        var sum = $("#bet-sum").val();
+        console.log(itemId, " ", event," ", koef," ", sum);
 
                     $.ajax({
                         type: "POST",

@@ -46,6 +46,7 @@
 
   <!-- Main component for a primary marketing message or call to action -->
   <div class="jumbotron">
+    <form id="bet-form" class="form-horizontal">
     <table class="table table-hover">
       <thead>
       <tr>
@@ -76,16 +77,21 @@
       </tbody>
     </table>
 
-    <div class="form-group">
+      <div class="form-group">
+        <label class="control-label col-xs-3" for="bet-sum">Bet sum:</label>
+        <div class="col-xs-9">
+          <input type="number" class="form-control" id="bet-sum" name="bet-sum" pattern="[0-9\/]*"  step="1.0"/>
+        </div>
+      </div>
+
+      <div class="form-group">
       <div class="col-xs-offset-3 col-xs-9">
-        <p>
-          <input type="text" class="form-control" id="sum" placeholder="Bet sum">
-          <input id="save" type="submit" class="btn btn-lg btn-primary" value="Bet">
-          <a class="btn btn-lg btn-default" id="back" href="../profile" role="button">Back to profile</a>
-        </p>
+        <input id="save" type="submit" class="btn btn-lg btn-primary" value="Bet">
+        <input type="reset" class="btn btn-lg btn-default" value="Clean the form">
+        <a class="btn btn-lg btn-default" id="back" href="../profile" role="button">Back to profile</a>
       </div>
     </div>
-
+    </form>
 
   </div>
 
