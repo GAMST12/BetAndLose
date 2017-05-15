@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ua.skillsup.betandlose.filter.AuthFilter;
+import ua.skillsup.betandlose.model.additional.DepositWithdrawal;
 import ua.skillsup.betandlose.model.message.ResponseMessage;
 import ua.skillsup.betandlose.service.BetService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 
 @Controller
 public class MoneyController {
@@ -20,16 +20,16 @@ public class MoneyController {
 
     @RequestMapping(value = "/deposit", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage deposit(@RequestBody BigDecimal sum, HttpServletRequest request) {
-        System.out.println(sum);
-        return betService.deposit((String)request.getSession().getAttribute(AuthFilter.AUTH_ATTR_LOGIN), sum);
+    public ResponseMessage deposit(@RequestBody DepositWithdrawal deposit, HttpServletRequest request) {
+        System.out.println(deposit.getSum());
+        return betService.deposit((String)request.getSession().getAttribute(AuthFilter.AUTH_ATTR_LOGIN), deposit.getSum());
     }
 
     @RequestMapping(value = "/withdraw", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseMessage withdraw(@RequestBody BigDecimal sum, HttpServletRequest request) {
-        System.out.println(sum);
-        return betService.withdraw((String)request.getSession().getAttribute(AuthFilter.AUTH_ATTR_LOGIN), sum);
+    public ResponseMessage withdraw(@RequestBody DepositWithdrawal withdrawal, HttpServletRequest request) {
+        System.out.println(withdrawal.getSum());
+        return betService.withdraw((String)request.getSession().getAttribute(AuthFilter.AUTH_ATTR_LOGIN), withdrawal.getSum());
     }
 
 
